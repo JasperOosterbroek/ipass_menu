@@ -8,21 +8,25 @@
 // v = menuarraysize
 template<int t, int u> class baseMenu {
 private:
-	std::array<menu<u>, t> & menus;
+	std::array<menu<u>*, t> & menus;
 	unsigned int maxHeight;
 	unsigned int maxWidth;
 	std::array<unsigned int, 2> curpos = {0,0};
 public:
-	baseMenu<t,u>(std::array<menu<u>, t> & menus):
+	baseMenu<t,u>(std::array<menu<u>*, t> & menus):
 		menus (menus),
 		maxHeight(u - 1),
 		maxWidth(t - 1)
-	{}
+	{
+		for(unsigned int i = 0; i < menus.size(); i++){
+			menus[i]->setBaseMenuPosition(i);
+		}
+	}
 	menu<u>& getMenuByIndex(int index){
 		return menus[index];
 	}
 	
-	menu<u>& getCurrentMenu(){
+	menu<u>* getCurrentMenu(){
 		return menus[curpos[0]];
 	}
 	
@@ -43,11 +47,26 @@ public:
 			curpos[1]--;
 		}
 	}
+	
 	void cursorDown(){
 		if(curpos[1] < maxHeight){
 			curpos[1]++;
 		}
 	}
+	
+	void select(){
+		getCurrentMenu()->getMenuItemByIndex(curpos[1]).run();
+	}
+	
+	void setMenu(menu<u> & setMenu){
+		curpos[0] = setMenu.getBaseMenuPosition();
+	}
+	
+	void previousMenu(){
+		curpos[0] = getCurrentMenu()->getParentMenu()->getBaseMenuPosition();
+	}
+	
+	
 };
 
 	

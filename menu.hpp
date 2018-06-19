@@ -7,27 +7,34 @@ template<int t> class menu
 {
 private:
 	std::array<menuItem, t> menuItemArray;
-	menu<t> *parentMenu;
-	int cursorPos = 0;
-	int size;
+	menu<t>* parentMenu;
+	unsigned int baseMenuPosition = 0;
 public:
 
 	menu<t>(const std::array<menuItem, t> & menuItems):
 		menuItemArray( menuItems)
 		
-	{
-		size = menuItems.size();
-		}
+	{}
 	
-	menu<t>(const std::array<menuItem, t> & menuItems, const menu<t> & parentMenu):
-		parentMenu( parentMenu ),
-		menuItemArray( menuItems )
-		{
-			size = menuItems.size();
-		}
+	menu<t>(const std::array<menuItem, t> & menuItems, menu<t> *parentMenu):
+		menuItemArray( menuItems ),
+		parentMenu( parentMenu )
+		{}
 		
 	menuItem& getMenuItemByIndex(int index){
 		return menuItemArray[index];
+	}
+	
+	menu<t>* getParentMenu(){
+		return parentMenu;
+	}
+	
+	void setBaseMenuPosition(unsigned int i){
+		baseMenuPosition = i;
+	}
+	
+	unsigned int getBaseMenuPosition(){
+		return baseMenuPosition;
 	}
 };
 

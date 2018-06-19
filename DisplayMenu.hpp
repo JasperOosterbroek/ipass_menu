@@ -4,15 +4,14 @@
 #include "baseMenu.hpp"
 
 template<int t, int u>
-class DisplayMenu
+class displayMenu
 {
 protected:
 	baseMenu<t, u> & baseMenuRef;
 public:
-	DisplayMenu<t, u>(baseMenu<t, u> & baseMenuRef):
+	displayMenu<t, u>(baseMenu<t, u> & baseMenuRef):
 	baseMenuRef(baseMenuRef)
 	{}
-	
 
 	
 	virtual void draw() = 0;
