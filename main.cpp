@@ -1,15 +1,52 @@
 #include "hwlib.hpp"
 
 #include <array>
-
+#include <functional>
 #include "menu.hpp"
 #include "menuItem.hpp"
 #include "baseMenu.hpp"
 #include "hd44780Menu.hpp"
 #include "joystickMenuController.hpp"
 
-// always for the love of shit and christ add this line of code to the main file, it makes the most beautifull piece of shit code work. thank you.
-namespace std {void __throw_bad_function_call() { while(1); }; }
+
+class testclass : public menuItem{
+private:
+	
+public:
+
+	testclass(hwlib::string<0> & name):
+	menuItem(name)
+	{}
+	
+	void run(){
+		hwlib::cout << "werkt het?";
+	}
+};
+
+class testclass2 : public menuItem{
+private:
+	hwlib::hd44780 & display;
+public:
+
+	testclass2(hwlib::string<0> & name, hwlib::hd44780 & display):
+	menuItem(name),
+	display( display )
+	{}
+	void test(){
+		display << '\n';
+		display << "dit werkt ook!";
+	}
+	void run(){
+		hwlib::cout << "het werkt!";
+		display.clear();
+		display << '\r';
+		display << "het werkt!";
+		test();
+		for(;;){
+			
+		}
+	}
+};
 
 int main(int argc, char **argv)
 {
@@ -31,15 +68,6 @@ int main(int argc, char **argv)
 
 	auto display = hwlib::hd44780(rs, e, dataPins, lines, columns);
 	hwlib::wait_ms(500);
-
-
-	auto test = [&](){
-		display.clear();
-		display << "carlos == held";
-		for(;;){
-//			hwlib::cout << "halp ";
-		}
-	};
 
 	const int maxMenuItemsPerMenu = 4;
 	const int maxMenus = 2;
@@ -64,17 +92,17 @@ int main(int argc, char **argv)
 	menuNameTest4.clear() << "krakatoa"; //10
 //	construct menuitem
 
-	menuItem testMenuItem1(menuNameTest1, test);
-	menuItem testMenuItem2(menuNameTest2, test);
-	menuItem testMenuItem3(menuNameTest3, test);
-	menuItem testMenuItem4(menuNameTest4, test);
-
-	menuItem testMenuItem5(menuNameTest5, test);
-	menuItem testMenuItem6(menuNameTest5, test);
-
-	std::array<menuItem, maxMenuItemsPerMenu> menuItemArrayTest = {testMenuItem1, testMenuItem2, testMenuItem3, testMenuItem4};
+	testclass testMenuItem1(menuNameTest1);
+	testclass2 testMenuItem2(menuNameTest2, display);
+	testclass testMenuItem3(menuNameTest3);
+	testclass testMenuItem4(menuNameTest4);
 	
-	std::array<menuItem, maxMenuItemsPerMenu> menuItemArrayTest2 = {testMenuItem4, testMenuItem3, testMenuItem2, testMenuItem1};
+	testclass testMenuItem5(menuNameTest5);
+	testclass testMenuItem6(menuNameTest6);
+
+	std::array<menuItem*, maxMenuItemsPerMenu> menuItemArrayTest = {&testMenuItem1, &testMenuItem2, &testMenuItem3, &testMenuItem4};
+	
+	std::array<menuItem*, maxMenuItemsPerMenu> menuItemArrayTest2 = {&testMenuItem4, &testMenuItem3, &testMenuItem2, &testMenuItem1};
 
 	menu<maxMenuItemsPerMenu> testmenu(menuItemArrayTest);
 	menu<maxMenuItemsPerMenu> testmenu2(menuItemArrayTest2, &testmenu);
@@ -94,11 +122,16 @@ int main(int argc, char **argv)
 	hwlib::wait_ms(1000);
 	joystickcontroller.flush();
 	
+	
+//	testmenu.getMenuItemByIndex(0)->setFunction();
+//	testmenu.getMenuItemByIndex(1)->setFunction();
+//	testmenu.getMenuItemByIndex(2).setFunction();
+//	testmenu.getMenuItemByIndex(3).setFunction();
+
 	for(;;){
 		if(joystickcontroller.read()){
 			hd44780.draw();
-			hwlib::wait_ms(500);
+			hwlib::wait_ms(250);
 		}
-//		hwlib::wait_ms(500);
 	}
 }

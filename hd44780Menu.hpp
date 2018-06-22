@@ -28,7 +28,7 @@ public:
 				display << " ";
 			}
 			if(i <= displayMenu<t,u>::baseMenuRef.getMaxHeight()){
-				display << displayMenu<t,u>::baseMenuRef.getCurrentMenu()->getMenuItemByIndex(i).getName();
+				display << displayMenu<t,u>::baseMenuRef.getCurrentMenu()->getMenuItemByIndex(i)->getName();
 			}
 			display << '\n';
 		}

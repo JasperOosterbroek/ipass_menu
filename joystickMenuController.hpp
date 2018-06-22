@@ -31,14 +31,14 @@ public:
 		}
 		int tempXAxis = xAxisPin.get();
 		int tempYAxis = yAxisPin.get();
-		hwlib::cout << tempXAxis << " - " << tempYAxis << '\n';
+//		hwlib::cout << tempXAxis << " - " << tempYAxis << '\n';
 		// checkcenter
 		if(!((tempXAxis < 2800 && tempXAxis > 3200) && (tempYAxis < 2800 && tempYAxis > 3200)) ){
 			//check left && right
 			if(tempXAxis > 3500){
 				controlMenu<t,u>::previousMenu();
 				return true;
-			}else if(tempXAxis < 300){
+			}else if(tempXAxis < 500){
 				controlMenu<t, u>::select();
 				return true;
 			}
@@ -46,7 +46,7 @@ public:
 			else if(tempYAxis > 3500){
 				controlMenu<t,u>::cursorUp();
 				return true;
-			}else if(tempYAxis < 300){
+			}else if(tempYAxis < 500){
 				controlMenu<t,u>::cursorDown();
 				return true;
 			}else{

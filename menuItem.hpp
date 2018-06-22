@@ -8,20 +8,18 @@ class menuItem{
 	
 private:
 	hwlib::string<0> & name;
-	//pointer
-		std::function<void()> f;
 public:
 	
-	menuItem(hwlib::string<0> & name, std::function<void()> f):
-	name( name ),
-	f( f )
-	{};
+	menuItem(hwlib::string<0> & name):
+	name( name )
+	{}
+	
+	
 	hwlib::string<0> getName(){
 		return name;
 	}
-	void run(){
-		f();
-	}
+	
+	virtual void run() = 0;
 
 };
 

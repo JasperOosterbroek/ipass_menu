@@ -55,15 +55,16 @@ public:
 	}
 	
 	void select(){
-		getCurrentMenu()->getMenuItemByIndex(curpos[1]).run();
+		getCurrentMenu()->getMenuItemByIndex(curpos[1])->run();
 	}
 	
-	void setMenu(menu<u> & setMenu){
-		curpos[0] = setMenu.getBaseMenuPosition();
+	void setMenu(menu<u> & menu){
+		
+		curpos[0] = menu.getBaseMenuPosition(); 
 	}
 	
 	void previousMenu(){
-		curpos[0] = getCurrentMenu()->getParentMenu()->getBaseMenuPosition();
+		curpos[0] = getCurrentMenu()->getParentMenuPosition();
 	}
 	
 	
