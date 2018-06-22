@@ -38,8 +38,9 @@ public:
 			curpos[1] = i;
 		}
 	}
-	unsigned int getMaxHeight(){
-		return maxHeight;
+	
+	unsigned int getCurrentMenuSize(){
+		return menus[curpos[0]]->getMenuItemArraySize();
 	}
 	
 	void cursorUp(){
@@ -49,7 +50,7 @@ public:
 	}
 	
 	void cursorDown(){
-		if(curpos[1] < maxHeight){
+		if(curpos[1] < getCurrentMenuSize() -1){
 			curpos[1]++;
 		}
 	}
@@ -65,6 +66,7 @@ public:
 	
 	void previousMenu(){
 		curpos[0] = getCurrentMenu()->getParentMenuPosition();
+		curpos[1] = 0;
 	}
 	
 	

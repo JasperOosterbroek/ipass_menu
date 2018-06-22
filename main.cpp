@@ -7,7 +7,7 @@
 #include "baseMenu.hpp"
 #include "hd44780Menu.hpp"
 #include "joystickMenuController.hpp"
-
+#include "MenuItemMenuLink.hpp"
 
 class testclass : public menuItem{
 private:
@@ -94,15 +94,15 @@ int main(int argc, char **argv)
 
 	testclass testMenuItem1(menuNameTest1);
 	testclass2 testMenuItem2(menuNameTest2, display);
-	testclass testMenuItem3(menuNameTest3);
+	
 	testclass testMenuItem4(menuNameTest4);
 	
 	testclass testMenuItem5(menuNameTest5);
 	testclass testMenuItem6(menuNameTest6);
 
-	std::array<menuItem*, maxMenuItemsPerMenu> menuItemArrayTest = {&testMenuItem1, &testMenuItem2, &testMenuItem3, &testMenuItem4};
+	std::array<menuItem*, maxMenuItemsPerMenu> menuItemArrayTest = {&testMenuItem1};
 	
-	std::array<menuItem*, maxMenuItemsPerMenu> menuItemArrayTest2 = {&testMenuItem4, &testMenuItem3, &testMenuItem2, &testMenuItem1};
+	std::array<menuItem*, maxMenuItemsPerMenu> menuItemArrayTest2 = {&testMenuItem4, &testMenuItem2};
 
 	menu<maxMenuItemsPerMenu> testmenu(menuItemArrayTest);
 	menu<maxMenuItemsPerMenu> testmenu2(menuItemArrayTest2, &testmenu);
@@ -118,15 +118,14 @@ int main(int argc, char **argv)
 	auto yaxis = hwlib::target::pin_adc(hwlib::target::ad_pins::a0);
 	auto joystickcontroller = joystickMenuController<2, maxMenuItemsPerMenu>(baseMenuTest, click, xaxis, yaxis);
 	
+	MenuItemMenuLink<maxMenus,maxMenuItemsPerMenu> testMenuItem3(menuNameTest3, testmenu2, baseMenuTest);
+	
+	testmenu.addMenuItem(&testMenuItem1);
+	testmenu.addMenuItem(&testMenuItem3);
+	
 	hd44780.draw();
 	hwlib::wait_ms(1000);
 	joystickcontroller.flush();
-	
-	
-//	testmenu.getMenuItemByIndex(0)->setFunction();
-//	testmenu.getMenuItemByIndex(1)->setFunction();
-//	testmenu.getMenuItemByIndex(2).setFunction();
-//	testmenu.getMenuItemByIndex(3).setFunction();
 
 	for(;;){
 		if(joystickcontroller.read()){

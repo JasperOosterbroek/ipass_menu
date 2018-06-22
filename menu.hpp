@@ -10,19 +10,23 @@ private:
 	unsigned int parenMenuPosition = 0;
 	unsigned int baseMenuPosition = 0;
 public:
+	
+	menu<t>(){}
 
 	menu<t>(const std::array<menuItem*, t> & menuItems):
 		menuItemArray( menuItems)
-		
 	{}
+	
+	menu<t>(menu<t> *parentMenu){
+		baseMenuPosition = parentMenu->getBaseMenuPosition();
+	}
 	
 	menu<t>(const std::array<menuItem*, t> & menuItems, menu<t> *parentMenu):
 		menuItemArray( menuItems )
 		{
 		baseMenuPosition = parentMenu->getBaseMenuPosition();
-		hwlib::cout << baseMenuPosition;
 		}
-		
+	
 	menuItem* getMenuItemByIndex(int index){
 		return menuItemArray[index];
 	}
@@ -36,9 +40,28 @@ public:
 	}
 	
 	unsigned int getBaseMenuPosition(){
-		hwlib::cout << baseMenuPosition;
 		return baseMenuPosition;
 	}
+	
+	unsigned int getMenuItemArraySize(){
+		unsigned int count = 0;
+		for(unsigned int i = 0; i <= menuItemArray.max_size() -1; i++ ){
+			if(menuItemArray[i] != NULL){
+				count++;
+			}
+		}
+		return count;
+	}
+	
+	void addMenuItem(menuItem* item){
+		for(unsigned int i = 0; i <= menuItemArray.max_size()-1; i++ ){
+			if(menuItemArray[i] == NULL){
+				menuItemArray[i] = item;
+				break;
+			}
+		}
+	}
+	
 };
 
 #endif // MENU_HPP

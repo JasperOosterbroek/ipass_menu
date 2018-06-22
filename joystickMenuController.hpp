@@ -31,7 +31,6 @@ public:
 		}
 		int tempXAxis = xAxisPin.get();
 		int tempYAxis = yAxisPin.get();
-//		hwlib::cout << tempXAxis << " - " << tempYAxis << '\n';
 		// checkcenter
 		if(!((tempXAxis < 2800 && tempXAxis > 3200) && (tempYAxis < 2800 && tempYAxis > 3200)) ){
 			//check left && right

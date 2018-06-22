@@ -22,12 +22,13 @@ public:
 		display.clear();
 		display << '\r';
 		for(unsigned int i = displayMenu<t,u>::baseMenuRef.getCurrentCursorPos(); i < lines + displayMenu<t,u>::baseMenuRef.getCurrentCursorPos(); i++){
+			
 			if( i == displayMenu<t,u>::baseMenuRef.getCurrentCursorPos()){
 				display << char(62);
 			}else{
 				display << " ";
 			}
-			if(i <= displayMenu<t,u>::baseMenuRef.getMaxHeight()){
+			if(i < displayMenu<t,u>::baseMenuRef.getCurrentMenuSize()){
 				display << displayMenu<t,u>::baseMenuRef.getCurrentMenu()->getMenuItemByIndex(i)->getName();
 			}
 			display << '\n';
