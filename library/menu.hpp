@@ -33,13 +33,15 @@ template<int t> class menu
 	
 private:
 	std::array<menuItem*, t> menuItemArray;
-	unsigned int parenMenuPosition = 0;
+	unsigned int parentMenuPosition = 0;
 	unsigned int baseMenuPosition = 0;
 	
 public:
 	/// \brief
 	/// default empty constructor
-	menu<t>(){}
+	menu<t>():
+		menuItemArray(){
+	}
 	
 	/// \brief
 	/// constructor with an by reference array of menuItems
@@ -50,7 +52,7 @@ public:
 	/// \brief
 	/// construct with a pointer to the parentMenu
 	menu<t>(menu<t> *parentMenu){
-		baseMenuPosition = parentMenu->getBaseMenuPosition();
+		parentMenuPosition = parentMenu->getBaseMenuPosition();
 	}
 	
 	/// \brief
@@ -58,7 +60,7 @@ public:
 	menu<t>(const std::array<menuItem*, t> & menuItems, menu<t> *parentMenu):
 		menuItemArray( menuItems )
 		{
-		baseMenuPosition = parentMenu->getBaseMenuPosition();
+		parentMenuPosition = parentMenu->getBaseMenuPosition();
 		}
 	
 	/// \brief
@@ -74,7 +76,7 @@ public:
 	/// \details
 	/// Returns the position of the parentMenuPosition as an unsigned integer.
 	unsigned int getParentMenuPosition(){
-		return parenMenuPosition;
+		return parentMenuPosition;
 	}
 	
 	/// \brief

@@ -40,17 +40,15 @@ template<int t, int u> class baseMenu {
 	public:
 		
 		/// \brief
-		/// Construct an empty baseMenu, a baseMenu can be empty and menu's can be added later on.
-		baseMenu<t, u>(){}
-		
-		/// \brief
 		/// Construct a baseMenu filled with an array of menu's
 		baseMenu<t,u>(std::array<menu<u>*, t> & menus):
 			menus (menus)
 		{
 			hwlib::wait_ms(50);
 			for(unsigned int i = 0; i < menus.size(); i++){
-				menus[i]->setBaseMenuPosition(i);
+				if(menus[i] != NULL){
+					menus[i]->setBaseMenuPosition(i);
+				}
 			}
 		}
 		
@@ -59,7 +57,7 @@ template<int t, int u> class baseMenu {
 		/// \details
 		/// returns a menu by reference when given an integer as index.
 		
-		menu<u>& getMenuByIndex(int index){
+		menu<u>* getMenuByIndex(int index){
 			return menus[index];
 		}
 		
@@ -131,8 +129,8 @@ template<int t, int u> class baseMenu {
 		/// Set the menu to the given menu
 		/// \details
 		/// Set the menu to the by refrence given menu using the getBaseMenuPosition function which returns the index of the given function.
-		void setMenu(menu<u> & menu){
-			currentMenuIndex = menu.getBaseMenuPosition(); 
+		void setMenu(menu<u>* menu){
+			currentMenuIndex = menu->getBaseMenuPosition(); 
 		}
 		
 		/// \brief
