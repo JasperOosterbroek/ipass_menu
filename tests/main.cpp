@@ -29,6 +29,8 @@ public:
 		
 	}
 };
+
+
  /***********************
  *  baseMenu Testcases  *
  ***********************/
@@ -233,3 +235,58 @@ TEST_CASE("baseMenu addMenu"){
 	testMenuItem.setName(changedTestString);
 	REQUIRE(testMenuItem.getName() == changedTestString);
  }
+ 
+ /********************
+ *  menu controller  *
+ ********************/
+ 
+ //menu controller previousMenu
+ TEST_CASE("menuController previousMenu without cursorpos"){
+	const int maxMenus = 2;
+	const int maxMenuItemsPerMenu = 1;
+	lightMenu::menu<maxMenuItemsPerMenu> testmenu;
+	lightMenu::menu<maxMenuItemsPerMenu> testmenuTwo(&testmenu);
+	std::array<lightMenu::menu<maxMenuItemsPerMenu>*, maxMenus>menuArrayTest = {&testmenu, &testmenuTwo};
+	lightMenu::baseMenu<maxMenus, maxMenuItemsPerMenu> baseMenuTest(menuArrayTest);
+	lightMenu::controlMenu<maxMenus, maxMenuItemsPerMenu> menuController(baseMenuTest);
+	baseMenuTest.setMenu(&testmenuTwo);
+	menuController.previousMenu();
+	REQUIRE(baseMenuTest.getCurrentMenu() == &testmenu);
+}
+
+//baseMenu previousMenu with cursorpos
+TEST_CASE("menuController previousMenu with cursorpos"){
+	const int maxMenus = 2;
+	const int maxMenuItemsPerMenu = 1;
+	lightMenu::menu<maxMenuItemsPerMenu> testmenu;
+	lightMenu::menu<maxMenuItemsPerMenu> testmenuTwo(&testmenu);
+	std::array<lightMenu::menu<maxMenuItemsPerMenu>*, maxMenus>menuArrayTest = {&testmenu, &testmenuTwo};
+	lightMenu::baseMenu<maxMenus, maxMenuItemsPerMenu> baseMenuTest(menuArrayTest);
+	lightMenu::controlMenu<maxMenus, maxMenuItemsPerMenu> menuController(baseMenuTest);
+	baseMenuTest.setMenu(&testmenuTwo);
+	menuController.previousMenu(0);
+	REQUIRE(baseMenuTest.getCurrentMenu() == &testmenu);
+}
+ //menu controller cursorDown
+ TEST_CASE("menuController cursorDown"){
+	const int maxMenus = 1;
+	const int maxMenuItemsPerMenu = 2;
+	lightMenu::menu<maxMenuItemsPerMenu> testmenu;
+	std::array<lightMenu::menu<maxMenuItemsPerMenu>*, maxMenus>menuArrayTest = {&testmenu};
+	lightMenu::baseMenu<maxMenus, maxMenuItemsPerMenu> baseMenuTest(menuArrayTest);
+	lightMenu::controlMenu<maxMenus, maxMenuItemsPerMenu> menuController(baseMenuTest);
+	menuController.cursorDown();
+	REQUIRE(baseMenuTest.getCurrentCursorPos() == 1);
+}
+ //menu controller cursorUp
+ TEST_CASE("menuController cursorUp"){
+	const int maxMenus = 1;
+	const int maxMenuItemsPerMenu = 2;
+	lightMenu::menu<maxMenuItemsPerMenu> testmenu;
+	std::array<lightMenu::menu<maxMenuItemsPerMenu>*, maxMenus>menuArrayTest = {&testmenu};
+	lightMenu::baseMenu<maxMenus, maxMenuItemsPerMenu> baseMenuTest(menuArrayTest);
+	lightMenu::controlMenu<maxMenus, maxMenuItemsPerMenu> menuController(baseMenuTest);
+	baseMenuTest.setCursorPos(1);
+	menuController.cursorUp();
+	REQUIRE(baseMenuTest.getCurrentCursorPos() == 0);
+}
