@@ -41,7 +41,6 @@ public:
 	baseMenuRef(baseMenuRef)
 	{}
 
-protected:
 	/// \brief
 	/// Executes the cursorUp function in the baseMenu class.
 	void cursorUp(){
@@ -66,6 +65,11 @@ protected:
 		baseMenuRef.previousMenu();
 	}
 	
+	/// \brief
+	/// executes the previousMenu function in the basemenu class with unsigned integer.
+	void previousMenu(unsigned int i){
+		baseMenuRef.previousMenu(i);
+	}
 };
 }
 #endif // CONTROLMENU_HPP
