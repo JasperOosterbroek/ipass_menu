@@ -68,14 +68,7 @@ public:
 		}
 		return false;
 	}
-	//  might not be neccesery because of just running the draw function
-	void back(std::function<void()> f){
-		f();
-	}
 	
-	void backToMenu(){
-		
-	}
 };
 
 #endif // JOYSTICKMENUCONTROLLER_HPP
