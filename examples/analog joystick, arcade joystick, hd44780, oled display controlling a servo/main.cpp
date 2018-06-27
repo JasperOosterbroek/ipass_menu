@@ -58,7 +58,7 @@ int main(int argc, char **argv)
 	auto servoPin = hwlib::target::pin_out(hwlib::target::pins::d45);
 	hwlib::wait_ms(500);
 
-	const int maxMenuItemsPerMenu = 5;
+	const int maxMenuItemsPerMenu = 6;
 	const int maxMenus = 3;
 //	menuitem name
 
@@ -80,12 +80,16 @@ int main(int argc, char **argv)
 	hwlib::string<30> servoPos100;
 	servoPos100.clear() << "Set servo 100%";
 	
+	hwlib::string<30> back;
+	back.clear() << "Terug";
+	
 	
 	servoControl servoPos0MenuItem(servoPos0, 0, servoPin);
 	servoControl servoPos25MenuItem(servoPos25, 25, servoPin);
 	servoControl servoPos50MenuItem(servoPos50, 50, servoPin);
 	servoControl servoPos75MenuItem(servoPos75, 75, servoPin);
 	servoControl servoPos100MenuItem(servoPos100, 100, servoPin);
+	
 	
 	std::array<lightMenu::menuItem*, maxMenuItemsPerMenu> mainMenuArray = {};
 	
@@ -112,7 +116,11 @@ int main(int argc, char **argv)
 	auto arcJoy = arcadeJoystickController<maxMenus, maxMenuItemsPerMenu>(demoBaseMenu, arcJoyPinUp, arcJoyPinDown, arcJoyPinLeft, arcJoyPinRight);
 	
 	lightMenu::menuItemMenuLink<maxMenus,maxMenuItemsPerMenu> servoControlMenuItem(servoControlMenuString, servoControlMenu, demoBaseMenu);
+	
+	lightMenu::previousMenuMenuItem<maxMenus, maxMenuItemsPerMenu> backButton(back, demoBaseMenu);
+	
 	mainMenu.addMenuItem(&servoControlMenuItem);
+	servoControlMenu.addMenuItem(&backButton);
 	
 	joystickcontroller.flush();
 	hd4478020x4.draw();
