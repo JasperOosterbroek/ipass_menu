@@ -44,7 +44,6 @@ template<int t, int u> class baseMenu {
 		baseMenu<t,u>(std::array<menu<u>*, t> & menus):
 			menus (menus)
 		{
-			hwlib::wait_ms(50);
 			for(unsigned int i = 0; i < menus.size(); i++){
 				if(menus[i] != NULL){
 					menus[i]->setBaseMenuPosition(i);

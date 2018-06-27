@@ -45,7 +45,7 @@ private:
 	/// \brief
 	/// The run function in this instance sets the menulink as the currentmenu and resets the cursor position.
 	void run(){
-		baseMenuRef.setMenu(menulink);
+		baseMenuRef.setMenu(&menulink);
 		baseMenuRef.setCursorPos(0);
 	}
 
